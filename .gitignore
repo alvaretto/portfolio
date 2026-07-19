@@ -1,0 +1,17 @@
+# Caché local de Wrangler — contiene el account_id y el correo de la cuenta
+# de Cloudflare. No debe versionarse en un repositorio público.
+.wrangler/
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+*~
+
+# Editores
+.vscode/
+.idea/
+*.swp
+
+# Node (por si en el futuro se añade tooling)
+node_modules/
+npm-debug.log*
