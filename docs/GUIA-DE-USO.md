@@ -8,12 +8,24 @@ todo se edita en un archivo de texto y se sube con tres comandos.
 
 ---
 
+## Atajo recomendado
+
+La ruta del proyecto es larga. Añade esto una sola vez a tu `~/.zshrc`:
+
+```bash
+alias portafolio='cd ~/Proyectos-2026/Proyectos-Varios/Emprendimientos/MiTercerMillon/portfolio'
+```
+
+Recarga con `source ~/.zshrc` y a partir de ahí basta escribir **`portafolio`**
+para entrar. En el resto de esta guía, donde aparezca el `cd` largo, puedes
+usar ese atajo.
+
 ## El ciclo completo
 
 Cualquier cambio sigue siempre los mismos cuatro pasos:
 
 ```bash
-cd ~/portfolio                                   # 1. entrar al proyecto
+cd ~/Proyectos-2026/Proyectos-Varios/Emprendimientos/MiTercerMillon/portfolio                                   # 1. entrar al proyecto
 # 2. editar index.html con el editor que prefieras
 git add -A
 git commit -m "descripción breve de lo que cambiaste"
@@ -68,7 +80,7 @@ Están en el bloque `about-stats`, alrededor de la línea 1300:
 2. Procésalo y colócalo:
 
 ```bash
-cd ~/portfolio
+cd ~/Proyectos-2026/Proyectos-Varios/Emprendimientos/MiTercerMillon/portfolio
 magick /ruta/a/tu/foto.jpg -resize 600x600^ -gravity center \
   -extent 600x600 -quality 88 -strip img/foto.jpg
 ```

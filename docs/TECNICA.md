@@ -11,7 +11,7 @@ mantenerlo dentro de un año —incluido su autor.
 ## Arquitectura
 
 ```
-   ~/portfolio (local)
+   ~/Proyectos-2026/Proyectos-Varios/Emprendimientos/MiTercerMillon/portfolio (local)
         │  git push
         ▼
    github.com/alvaretto/portfolio  (master)

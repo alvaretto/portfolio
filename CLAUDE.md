@@ -57,7 +57,7 @@ Contiene el `account_id` y el correo de la cuenta de Cloudflare. Ya está en
 ## Flujo de trabajo
 
 ```bash
-cd ~/portfolio
+cd ~/Proyectos-2026/Proyectos-Varios/Emprendimientos/MiTercerMillon/portfolio
 # editar
 git add -A && git commit -m "…" && git push
 # ~30 s después está en producción

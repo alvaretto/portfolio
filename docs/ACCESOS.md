@@ -36,7 +36,7 @@ identidad del proyecto: *panel → My Profile → Authentication → Change Emai
 | Qué | Dónde | Notas |
 |---|---|---|
 | Token OAuth de Wrangler | `~/.config/.wrangler/config/default.toml` | Generado por `wrangler login`. **No versionar.** |
-| Caché de cuenta de Wrangler | `~/portfolio/.wrangler/` | Ignorado por `.gitignore` |
+| Caché de cuenta de Wrangler | `~/Proyectos-2026/Proyectos-Varios/Emprendimientos/MiTercerMillon/portfolio/.wrangler/` | Ignorado por `.gitignore` |
 | Credencial de GitHub | Gestionada por `gh` (keyring del sistema) | `gh auth status` para verificar |
 
 **No existe ningún token de API de Cloudflare de larga vida.** La integración
@@ -60,10 +60,10 @@ instalada y con acceso al repositorio `portfolio`.
 puede desplegar. El contenido íntegro está en GitHub; se puede recrear el
 proyecto en cualquier hosting estático en minutos.
 
-**Si se pierde el acceso a GitHub:** el repositorio local en `~/portfolio`
+**Si se pierde el acceso a GitHub:** el repositorio local en `~/Proyectos-2026/Proyectos-Varios/Emprendimientos/MiTercerMillon/portfolio`
 conserva todo el historial. Basta crear otro remoto y reconectar Cloudflare.
 
-**Si se pierden ambos:** mientras exista `~/portfolio` en disco, el proyecto
+**Si se pierden ambos:** mientras exista `~/Proyectos-2026/Proyectos-Varios/Emprendimientos/MiTercerMillon/portfolio` en disco, el proyecto
 está completo. Es un directorio de menos de 300 KB: conviene incluirlo en
 cualquier copia de seguridad.
 
@@ -85,7 +85,7 @@ No es una credencial y el riesgo es bajo (spam, principalmente). Para
 eliminarlo del todo hay que reescribir el historial y forzar la subida:
 
 ```bash
-cd ~/portfolio
+cd ~/Proyectos-2026/Proyectos-Varios/Emprendimientos/MiTercerMillon/portfolio
 FILTER_BRANCH_SQUELCH_WARNING=1 git filter-branch -f \
   --index-filter 'git rm -r --cached --ignore-unmatch .wrangler' \
   --prune-empty -- --all

@@ -25,7 +25,7 @@ publicación en Cloudflare Pages sin intervención manual.
 ## Cómo actualizarlo
 
 ```bash
-cd ~/portfolio
+cd ~/Proyectos-2026/Proyectos-Varios/Emprendimientos/MiTercerMillon/portfolio
 # editar index.html
 git add -A && git commit -m "descripción del cambio" && git push
 ```
