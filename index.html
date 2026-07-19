@@ -970,6 +970,23 @@
       gap: 1.5rem;
     }
 
+    .contact-cta h3 {
+      font-family: var(--font-display, inherit);
+      font-size: 1.75rem;
+      line-height: 1.2;
+      margin: 0;
+    }
+
+    .contact-cta p {
+      color: var(--text-muted);
+      margin: 0;
+      max-width: 34ch;
+    }
+
+    .contact-cta .form-submit {
+      text-decoration: none;
+    }
+
     .form-group {
       position: relative;
     }
@@ -1459,24 +1476,14 @@
           </a>
         </div>
       </div>
-      <form class="contact-form reveal" style="transition-delay: 0.2s;" onsubmit="event.preventDefault();">
-        <div class="form-group">
-          <label>Nombre</label>
-          <input type="text" placeholder="Tu nombre" required>
-        </div>
-        <div class="form-group">
-          <label>Email</label>
-          <input type="email" placeholder="tu@email.com" required>
-        </div>
-        <div class="form-group">
-          <label>Mensaje</label>
-          <textarea placeholder="Cuéntame sobre tu proyecto..." required></textarea>
-        </div>
-        <button type="submit" class="btn-primary form-submit">
-          Enviar mensaje
+      <div class="contact-form contact-cta reveal" style="transition-delay: 0.2s;">
+        <h3>¿Trabajamos juntos?</h3>
+        <p>Cuéntame sobre tu proyecto y te respondo en menos de 24 horas.</p>
+        <a href="mailto:alvaroangelm@gmail.com?subject=Contacto%20desde%20tu%20portafolio" class="btn-primary form-submit">
+          Enviar correo
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </button>
-      </form>
+        </a>
+      </div>
     </div>
   </section>
 
