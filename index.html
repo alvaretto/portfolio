@@ -884,24 +884,6 @@
       transform: scale(1.04);
     }
 
-    .project-code {
-      position: absolute;
-      inset: 0;
-      padding: 1.4rem 1.6rem;
-      overflow: hidden;
-      font-family: 'DM Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
-      font-size: 0.68rem;
-      line-height: 1.75;
-      color: var(--text-secondary);
-      background: var(--bg-deep);
-      white-space: pre;
-      tab-size: 2;
-    }
-
-    .project-code .c { color: var(--text-muted); font-style: italic; }
-    .project-code .k { color: var(--accent); }
-    .project-code .s { color: var(--accent-light); }
-    .project-code .f { color: var(--text-primary); }
 
     .project-preview::after {
       content: '';
@@ -1308,7 +1290,7 @@
         </p>
         <div class="about-stats">
           <div>
-            <div class="stat-number">24+</div>
+            <div class="stat-number">31</div>
             <div class="stat-label">Repositorios públicos</div>
           </div>
           <div>
@@ -1316,8 +1298,8 @@
             <div class="stat-label">Publicaciones LinkedIn</div>
           </div>
           <div>
-            <div class="stat-number">300+</div>
-            <div class="stat-label">Seguidores</div>
+            <div class="stat-number">302</div>
+            <div class="stat-label">Seguidores en LinkedIn</div>
           </div>
         </div>
       </div>
@@ -1436,39 +1418,6 @@
 
       <div class="project-item reveal" style="transition-delay: 0.1s;">
         <div class="project-info">
-          <h3>WhisperLab</h3>
-          <p>Herramienta automatizada para transcribir videos y traducir subtítulos de inglés a español, optimizada para contenido de IA y programación. Usa OpenAI Whisper + Claude API.</p>
-          <div class="project-tech">
-            <span>Python</span>
-            <span>Whisper</span>
-            <span>Claude API</span>
-            <span>Google Colab</span>
-          </div>
-          <a href="https://github.com/alvaretto/WhisperLab" class="project-link" target="_blank">
-            Ver en GitHub
-            <svg viewBox="0 0 24 24"><path d="M7 17l9.2-9.2M17 17V7.8H7.8"/></svg>
-          </a>
-        </div>
-        <div class="project-preview">
-          <div class="project-code" aria-label="Fragmento de código de WhisperLab que carga el modelo Whisper"><span class="c"># Carga del modelo de transcripción</span>
-<span class="k">import</span> whisper
-
-<span class="k">def</span> <span class="f">cargar_modelo_whisper</span>():
-    <span class="k">try</span>:
-        model = whisper.<span class="f">load_model</span>(<span class="s">"base"</span>)
-        <span class="f">print</span>(<span class="s">"Modelo cargado exitosamente."</span>)
-        <span class="k">return</span> model
-    <span class="k">except</span> Exception <span class="k">as</span> e:
-        <span class="f">print</span>(<span class="s">f"Error al cargar: {e}"</span>)
-        <span class="k">return</span> <span class="k">None</span>
-
-MAX_SUBTITLE_LENGTH = <span class="s">48</span></div>
-        </div>
-        <div class="project-number">02</div>
-      </div>
-
-      <div class="project-item reveal" style="transition-delay: 0.1s;">
-        <div class="project-info">
           <h3>Animaciones Matemáticas</h3>
           <p>Visualizaciones y animaciones de conceptos matemáticos usando Manim (Python), creando material didáctico visual para la enseñanza de porcentajes, funciones y geometría.</p>
           <div class="project-tech">
@@ -1485,7 +1434,7 @@ MAX_SUBTITLE_LENGTH = <span class="s">48</span></div>
         <div class="project-preview">
           <img src="img/manim.png" alt="Fotograma de una animación de Manim resolviendo paso a paso una integral definida por sustitución" width="1000" height="619" loading="lazy" decoding="async">
         </div>
-        <div class="project-number">03</div>
+        <div class="project-number">02</div>
       </div>
     </div>
   </section>
