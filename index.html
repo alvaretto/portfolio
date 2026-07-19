@@ -1,0 +1,1559 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio — Álvaro Ángel Molina</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg-deep: #080808;
+      --bg-primary: #0e0e0e;
+      --bg-card: #161616;
+      --bg-elevated: #1e1e1e;
+      --accent: #d4a039;
+      --accent-light: #f0c060;
+      --accent-dim: rgba(212, 160, 57, 0.15);
+      --text-primary: #f0ebe3;
+      --text-secondary: #8a8578;
+      --text-muted: #5a5549;
+      --border: rgba(212, 160, 57, 0.12);
+      --font-display: 'Playfair Display', Georgia, serif;
+      --font-body: 'DM Sans', system-ui, sans-serif;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scrollbar-width: thin;
+      scrollbar-color: var(--accent-dim) var(--bg-deep);
+    }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--bg-deep);
+      color: var(--text-primary);
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    /* ═══════════════════════════════════════
+       CURSOR PERSONALIZADO
+    ═══════════════════════════════════════ */
+    .cursor-dot {
+      position: fixed;
+      width: 8px;
+      height: 8px;
+      background: var(--accent);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: transform 0.1s ease, background 0.3s ease;
+      mix-blend-mode: difference;
+    }
+
+    .cursor-ring {
+      position: fixed;
+      width: 40px;
+      height: 40px;
+      border: 1.5px solid var(--accent);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: width 0.3s ease, height 0.3s ease, border-color 0.3s ease;
+      opacity: 0.6;
+    }
+
+    .cursor-ring.hover {
+      width: 60px;
+      height: 60px;
+      border-color: var(--accent-light);
+      opacity: 1;
+    }
+
+    /* ═══════════════════════════════════════
+       GRAIN OVERLAY
+    ═══════════════════════════════════════ */
+    .grain {
+      position: fixed;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      pointer-events: none;
+      z-index: 9000;
+      opacity: 0.035;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    /* ═══════════════════════════════════════
+       NAVEGACION
+    ═══════════════════════════════════════ */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 1.5rem 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      backdrop-filter: blur(20px);
+      background: rgba(8, 8, 8, 0.7);
+      border-bottom: 1px solid var(--border);
+      transition: transform 0.4s ease;
+    }
+
+    nav.hidden {
+      transform: translateY(-100%);
+    }
+
+    .nav-logo {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      text-decoration: none;
+      letter-spacing: -0.02em;
+    }
+
+    .nav-logo span {
+      color: var(--accent);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      transition: color 0.3s ease;
+      position: relative;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: var(--accent);
+      transition: width 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .nav-links a:hover {
+      color: var(--text-primary);
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .nav-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: none;
+      padding: 5px;
+    }
+
+    .nav-toggle span {
+      display: block;
+      width: 24px;
+      height: 1.5px;
+      background: var(--text-primary);
+      transition: all 0.3s ease;
+    }
+
+    /* ═══════════════════════════════════════
+       HERO SECTION
+    ═══════════════════════════════════════ */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      padding: 8rem 3rem 4rem;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -30%;
+      right: -10%;
+      width: 700px;
+      height: 700px;
+      background: radial-gradient(circle, var(--accent-dim) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+      animation: pulse-glow 8s ease-in-out infinite;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), var(--accent), var(--border), transparent);
+    }
+
+    @keyframes pulse-glow {
+      0%, 100% { opacity: 0.4; transform: scale(1); }
+      50% { opacity: 0.7; transform: scale(1.1); }
+    }
+
+    .hero-content {
+      max-width: 1400px;
+      margin: 0 auto;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .hero-text {
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-label {
+      font-size: 0.75rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.3em;
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .hero-label::before {
+      content: '';
+      width: 40px;
+      height: 1px;
+      background: var(--accent);
+    }
+
+    .hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 6vw, 5.5rem);
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero h1 .line {
+      display: block;
+      overflow: hidden;
+    }
+
+    .hero h1 .line span {
+      display: inline-block;
+      transform: translateY(110%);
+      animation: reveal-up 1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    .hero h1 .line:nth-child(2) span {
+      animation-delay: 0.15s;
+    }
+
+    .hero h1 .line:nth-child(3) span {
+      animation-delay: 0.3s;
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    @keyframes reveal-up {
+      to { transform: translateY(0); }
+    }
+
+    .hero-description {
+      font-size: 1.05rem;
+      line-height: 1.8;
+      color: var(--text-secondary);
+      max-width: 480px;
+      margin-bottom: 2.5rem;
+      opacity: 0;
+      animation: fade-in 1s ease 0.6s forwards;
+    }
+
+    @keyframes fade-in {
+      to { opacity: 1; }
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+      opacity: 0;
+      animation: fade-in 1s ease 0.8s forwards;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.95rem 2rem;
+      background: var(--accent);
+      color: var(--bg-deep);
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      text-decoration: none;
+      border: none;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(212, 160, 57, 0.3);
+    }
+
+    .btn-primary::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s ease;
+    }
+
+    .btn-primary:hover::before {
+      left: 100%;
+    }
+
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.95rem 2rem;
+      background: transparent;
+      color: var(--text-primary);
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      text-decoration: none;
+      border: 1px solid var(--border);
+      transition: border-color 0.3s ease, color 0.3s ease;
+    }
+
+    .btn-outline:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    /* Hero visual side */
+    .hero-visual {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      animation: fade-in 1.2s ease 0.5s forwards;
+    }
+
+    .hero-geometric {
+      width: 420px;
+      height: 420px;
+      position: relative;
+    }
+
+    .geo-ring {
+      position: absolute;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      animation: rotate-slow 30s linear infinite;
+    }
+
+    .geo-ring:nth-child(1) {
+      inset: 0;
+    }
+
+    .geo-ring:nth-child(2) {
+      inset: 40px;
+      animation-direction: reverse;
+      animation-duration: 25s;
+    }
+
+    .geo-ring:nth-child(3) {
+      inset: 80px;
+      animation-duration: 20s;
+    }
+
+    .geo-ring::before {
+      content: '';
+      position: absolute;
+      top: -3px;
+      left: 50%;
+      width: 6px;
+      height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+    }
+
+    .geo-center {
+      position: absolute;
+      inset: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-size: 4rem;
+      font-weight: 900;
+      color: var(--accent);
+      border: 2px solid var(--accent);
+      border-radius: 50%;
+      background: var(--accent-dim);
+    }
+
+    @keyframes rotate-slow {
+      to { transform: rotate(360deg); }
+    }
+
+    .scroll-indicator {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      opacity: 0;
+      animation: fade-in 1s ease 1.2s forwards;
+    }
+
+    .scroll-indicator span {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.3em;
+      color: var(--text-muted);
+    }
+
+    .scroll-line {
+      width: 1px;
+      height: 40px;
+      background: var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .scroll-line::after {
+      content: '';
+      position: absolute;
+      top: -100%;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--accent);
+      animation: scroll-down 2s ease infinite;
+    }
+
+    @keyframes scroll-down {
+      0% { top: -100%; }
+      100% { top: 100%; }
+    }
+
+    /* ═══════════════════════════════════════
+       SECCION GENERICA - REVEAL
+    ═══════════════════════════════════════ */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+                  transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .section-header {
+      margin-bottom: 4rem;
+    }
+
+    .section-label {
+      font-size: 0.7rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.3em;
+      color: var(--accent);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .section-label::before {
+      content: '';
+      width: 30px;
+      height: 1px;
+      background: var(--accent);
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+    }
+
+    .section-title em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    /* ═══════════════════════════════════════
+       SOBRE MI
+    ═══════════════════════════════════════ */
+    .about {
+      padding: 8rem 3rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 5rem;
+      align-items: start;
+    }
+
+    .about-image {
+      position: relative;
+      aspect-ratio: 3/4;
+      background: var(--bg-card);
+      overflow: hidden;
+    }
+
+    .about-image::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, var(--accent-dim), transparent 60%);
+      z-index: 1;
+    }
+
+    .about-image::after {
+      content: 'TU FOTO';
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-body);
+      font-size: 0.8rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .about-image-frame {
+      position: absolute;
+      top: -15px;
+      right: -15px;
+      bottom: 15px;
+      left: 15px;
+      border: 1px solid var(--accent);
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .about-content {
+      padding-top: 2rem;
+    }
+
+    .about-text {
+      font-size: 1.05rem;
+      line-height: 1.9;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+    }
+
+    .about-text strong {
+      color: var(--text-primary);
+      font-weight: 500;
+    }
+
+    .about-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin-top: 3rem;
+      padding-top: 3rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .stat-number {
+      font-family: var(--font-display);
+      font-size: 2.8rem;
+      font-weight: 700;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--text-muted);
+    }
+
+    /* ═══════════════════════════════════════
+       SKILLS
+    ═══════════════════════════════════════ */
+    .skills {
+      padding: 8rem 3rem;
+      background: var(--bg-primary);
+      position: relative;
+    }
+
+    .skills::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), var(--accent), var(--border), transparent);
+    }
+
+    .skills-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .skill-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      padding: 2.5rem;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.4s ease, transform 0.4s ease;
+    }
+
+    .skill-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-4px);
+    }
+
+    .skill-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), transparent);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    .skill-card:hover::before {
+      opacity: 1;
+    }
+
+    .skill-icon {
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--accent-dim);
+      border: 1px solid var(--border);
+      margin-bottom: 1.5rem;
+      font-size: 1.3rem;
+    }
+
+    .skill-card h3 {
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+
+    .skill-card p {
+      font-size: 0.9rem;
+      line-height: 1.7;
+      color: var(--text-secondary);
+      margin-bottom: 1.5rem;
+    }
+
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .skill-tag {
+      font-size: 0.7rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding: 0.35rem 0.75rem;
+      background: var(--accent-dim);
+      color: var(--accent);
+      border: 1px solid rgba(212, 160, 57, 0.1);
+    }
+
+    /* ═══════════════════════════════════════
+       PROYECTOS
+    ═══════════════════════════════════════ */
+    .projects {
+      padding: 8rem 3rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .projects-list {
+      display: flex;
+      flex-direction: column;
+      gap: 4rem;
+    }
+
+    .project-item {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 3rem;
+      align-items: center;
+      padding: 2.5rem;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.4s ease;
+    }
+
+    .project-item:hover {
+      border-color: var(--accent);
+    }
+
+    .project-item:nth-child(even) {
+      grid-template-columns: 1fr 1.4fr;
+    }
+
+    .project-item:nth-child(even) .project-preview {
+      order: -1;
+    }
+
+    .project-number {
+      position: absolute;
+      top: 1.5rem;
+      right: 2rem;
+      font-family: var(--font-display);
+      font-size: 5rem;
+      font-weight: 900;
+      color: var(--accent-dim);
+      line-height: 1;
+      pointer-events: none;
+    }
+
+    .project-info h3 {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      letter-spacing: -0.01em;
+    }
+
+    .project-info p {
+      font-size: 0.95rem;
+      line-height: 1.8;
+      color: var(--text-secondary);
+      margin-bottom: 1.5rem;
+    }
+
+    .project-tech {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .project-tech span {
+      font-size: 0.7rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding: 0.35rem 0.75rem;
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+    }
+
+    .project-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--accent);
+      text-decoration: none;
+      transition: gap 0.3s ease;
+    }
+
+    .project-link:hover {
+      gap: 1rem;
+    }
+
+    .project-link svg {
+      width: 16px;
+      height: 16px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+    }
+
+    .project-preview {
+      aspect-ratio: 16/10;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .project-preview::before {
+      content: 'PREVIEW';
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      letter-spacing: 0.3em;
+      color: var(--text-muted);
+    }
+
+    .project-preview::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, var(--accent-dim) 0%, transparent 50%);
+    }
+
+    /* ═══════════════════════════════════════
+       CONTACTO
+    ═══════════════════════════════════════ */
+    .contact {
+      padding: 8rem 3rem;
+      background: var(--bg-primary);
+      position: relative;
+    }
+
+    .contact::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), var(--accent), var(--border), transparent);
+    }
+
+    .contact-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+    }
+
+    .contact-info {
+      padding-top: 1rem;
+    }
+
+    .contact-text {
+      font-size: 1.05rem;
+      line-height: 1.8;
+      color: var(--text-secondary);
+      margin-bottom: 3rem;
+    }
+
+    .contact-channels {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .contact-channel {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      text-decoration: none;
+      color: var(--text-secondary);
+      transition: color 0.3s ease;
+    }
+
+    .contact-channel:hover {
+      color: var(--accent);
+    }
+
+    .contact-channel-icon {
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--border);
+      font-size: 1rem;
+      transition: border-color 0.3s ease, background 0.3s ease;
+    }
+
+    .contact-channel:hover .contact-channel-icon {
+      border-color: var(--accent);
+      background: var(--accent-dim);
+    }
+
+    .contact-channel-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--text-muted);
+      display: block;
+      margin-bottom: 0.2rem;
+    }
+
+    .contact-channel-value {
+      font-size: 0.95rem;
+    }
+
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .form-group {
+      position: relative;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 1rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text-primary);
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.3s ease;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-color: var(--accent);
+    }
+
+    .form-group textarea {
+      min-height: 150px;
+      resize: vertical;
+    }
+
+    .form-submit {
+      align-self: flex-start;
+      cursor: none;
+    }
+
+    /* ═══════════════════════════════════════
+       FOOTER
+    ═══════════════════════════════════════ */
+    footer {
+      padding: 3rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .footer-copy {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 2rem;
+    }
+
+    .footer-links a {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .footer-links a:hover {
+      color: var(--accent);
+    }
+
+    /* ═══════════════════════════════════════
+       RESPONSIVE
+    ═══════════════════════════════════════ */
+    @media (max-width: 1024px) {
+      .hero-content {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+
+      .hero-visual {
+        display: none;
+      }
+
+      .about-grid {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+
+      .about-image {
+        max-width: 400px;
+      }
+
+      .contact-inner {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+
+      .project-item,
+      .project-item:nth-child(even) {
+        grid-template-columns: 1fr;
+      }
+
+      .project-item:nth-child(even) .project-preview {
+        order: 0;
+      }
+    }
+
+    @media (max-width: 768px) {
+      nav {
+        padding: 1rem 1.5rem;
+      }
+
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        background: rgba(8, 8, 8, 0.95);
+        backdrop-filter: blur(20px);
+        padding: 2rem 1.5rem;
+        gap: 1.5rem;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .nav-links.open {
+        display: flex;
+      }
+
+      .nav-toggle {
+        display: flex;
+      }
+
+      .hero {
+        padding: 7rem 1.5rem 4rem;
+      }
+
+      .about,
+      .projects {
+        padding: 5rem 1.5rem;
+      }
+
+      .skills,
+      .contact {
+        padding: 5rem 1.5rem;
+      }
+
+      .about-stats {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+      }
+
+      .stat-number {
+        font-size: 2rem;
+      }
+
+      .skills-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-cta {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      footer {
+        flex-direction: column;
+        gap: 1.5rem;
+        text-align: center;
+        padding: 2rem 1.5rem;
+      }
+
+      .cursor-dot,
+      .cursor-ring {
+        display: none;
+      }
+
+      body {
+        cursor: auto;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .about-stats {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Cursor personalizado -->
+  <div class="cursor-dot" id="cursorDot"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <!-- Grain overlay -->
+  <div class="grain"></div>
+
+  <!-- Navegacion -->
+  <nav id="navbar">
+    <a href="#" class="nav-logo">álvaro<span>.</span>molina</a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#about">Sobre mí</a></li>
+      <li><a href="#skills">Habilidades</a></li>
+      <li><a href="#projects">Proyectos</a></li>
+      <li><a href="#contact">Contacto</a></li>
+    </ul>
+    <button class="nav-toggle" id="navToggle" aria-label="Menú">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero" id="hero">
+    <div class="hero-content">
+      <div class="hero-text">
+        <div class="hero-label">Armenia, Quindío — Colombia</div>
+        <h1>
+          <span class="line"><span>Educación,</span></span>
+          <span class="line"><span>código y</span></span>
+          <span class="line"><span><em>matemáticas</em></span></span>
+        </h1>
+        <p class="hero-description">
+          Docente y desarrollador especializado en tecnología educativa,
+          evaluación automatizada con R-exams y visualización de datos
+          para transformar la enseñanza de las matemáticas.
+        </p>
+        <div class="hero-cta">
+          <a href="#projects" class="btn-primary">
+            Ver proyectos
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17l9.2-9.2M17 17V7.8H7.8"/></svg>
+          </a>
+          <a href="#contact" class="btn-outline">Hablemos</a>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="hero-geometric">
+          <div class="geo-ring"></div>
+          <div class="geo-ring"></div>
+          <div class="geo-ring"></div>
+          <div class="geo-center">AM</div>
+        </div>
+      </div>
+    </div>
+    <div class="scroll-indicator">
+      <span>Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- Sobre mí -->
+  <section class="about" id="about">
+    <div class="reveal">
+      <div class="section-header">
+        <div class="section-label">01 — Sobre mí</div>
+        <h2 class="section-title">Donde las <em>matemáticas</em><br>se encuentran con la tecnología</h2>
+      </div>
+    </div>
+    <div class="about-grid">
+      <div class="reveal" style="transition-delay: 0.1s;">
+        <div class="about-image">
+          <div class="about-image-frame"></div>
+        </div>
+      </div>
+      <div class="about-content reveal" style="transition-delay: 0.2s;">
+        <p class="about-text">
+          Soy <strong>Álvaro Ángel Molina</strong>, docente y desarrollador desde
+          Armenia, Quindío, Colombia. Combino la enseñanza de las matemáticas
+          con herramientas de programación para crear <strong>experiencias educativas
+          dinámicas e innovadoras</strong>.
+        </p>
+        <p class="about-text">
+          Especializado en <strong>R-exams</strong> para generación automática de
+          evaluaciones tipo SABER ICFES, <strong>Manim</strong> para animaciones
+          matemáticas, y herramientas de IA aplicadas a la educación. Trabajo
+          con R, Python y LaTeX para transformar cómo se enseñan y evalúan
+          las matemáticas.
+        </p>
+        <div class="about-stats">
+          <div>
+            <div class="stat-number">24+</div>
+            <div class="stat-label">Repositorios públicos</div>
+          </div>
+          <div>
+            <div class="stat-number">3K+</div>
+            <div class="stat-label">Publicaciones LinkedIn</div>
+          </div>
+          <div>
+            <div class="stat-number">300+</div>
+            <div class="stat-label">Seguidores</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Habilidades -->
+  <section class="skills" id="skills">
+    <div class="skills-inner">
+      <div class="reveal">
+        <div class="section-header">
+          <div class="section-label">02 — Habilidades</div>
+          <h2 class="section-title">Herramientas y <em>tecnologías</em></h2>
+        </div>
+      </div>
+      <div class="skills-grid">
+        <div class="skill-card reveal" style="transition-delay: 0.1s;">
+          <div class="skill-icon">📊</div>
+          <h3>R / RStudio</h3>
+          <p>Generación dinámica de exámenes con r-exams, análisis estadístico y visualización de datos educativos.</p>
+          <div class="skill-tags">
+            <span class="skill-tag">R-exams</span>
+            <span class="skill-tag">RMarkdown</span>
+            <span class="skill-tag">ggplot2</span>
+            <span class="skill-tag">Shiny</span>
+          </div>
+        </div>
+        <div class="skill-card reveal" style="transition-delay: 0.2s;">
+          <div class="skill-icon">🐍</div>
+          <h3>Python</h3>
+          <p>Animaciones matemáticas con Manim, transcripción con Whisper y automatización de flujos educativos.</p>
+          <div class="skill-tags">
+            <span class="skill-tag">Manim</span>
+            <span class="skill-tag">Whisper</span>
+            <span class="skill-tag">Jupyter</span>
+            <span class="skill-tag">FFmpeg</span>
+          </div>
+        </div>
+        <div class="skill-card reveal" style="transition-delay: 0.3s;">
+          <div class="skill-icon">🧮</div>
+          <h3>Matemáticas</h3>
+          <p>Diseño de evaluaciones tipo SABER ICFES con alta aleatorización y escenarios pedagógicos dinámicos.</p>
+          <div class="skill-tags">
+            <span class="skill-tag">ICFES</span>
+            <span class="skill-tag">Estadística</span>
+            <span class="skill-tag">Cálculo</span>
+            <span class="skill-tag">LaTeX</span>
+          </div>
+        </div>
+        <div class="skill-card reveal" style="transition-delay: 0.4s;">
+          <div class="skill-icon">🤖</div>
+          <h3>IA y Automatización</h3>
+          <p>Integración de Claude, Whisper y modelos de lenguaje para crear herramientas educativas inteligentes.</p>
+          <div class="skill-tags">
+            <span class="skill-tag">Claude API</span>
+            <span class="skill-tag">OpenAI</span>
+            <span class="skill-tag">Ollama</span>
+            <span class="skill-tag">Prompting</span>
+          </div>
+        </div>
+        <div class="skill-card reveal" style="transition-delay: 0.5s;">
+          <div class="skill-icon">🐧</div>
+          <h3>Linux y DevOps</h3>
+          <p>Entornos de desarrollo en Manjaro/KDE Plasma, GitHub Actions y despliegue de herramientas educativas.</p>
+          <div class="skill-tags">
+            <span class="skill-tag">Manjaro</span>
+            <span class="skill-tag">Git</span>
+            <span class="skill-tag">GitHub Actions</span>
+            <span class="skill-tag">Docker</span>
+          </div>
+        </div>
+        <div class="skill-card reveal" style="transition-delay: 0.6s;">
+          <div class="skill-icon">🌐</div>
+          <h3>Web y Móvil</h3>
+          <p>Desarrollo de aplicaciones web y móviles con Flutter, publicación en RPubs y documentación técnica.</p>
+          <div class="skill-tags">
+            <span class="skill-tag">Flutter</span>
+            <span class="skill-tag">Dart</span>
+            <span class="skill-tag">HTML/CSS</span>
+            <span class="skill-tag">RPubs</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Proyectos -->
+  <section class="projects" id="projects">
+    <div class="reveal">
+      <div class="section-header">
+        <div class="section-label">03 — Proyectos</div>
+        <h2 class="section-title">Trabajo <em>seleccionado</em></h2>
+      </div>
+    </div>
+    <div class="projects-list">
+      <div class="project-item reveal" style="transition-delay: 0.1s;">
+        <div class="project-info">
+          <h3>R-Exams Matemáticas ICFES</h3>
+          <p>Repositorio de ejercicios dinámicos de matemáticas para evaluaciones tipo SABER ICFES con alta aleatorización, generando más de 51 billones de combinaciones posibles por examen.</p>
+          <div class="project-tech">
+            <span>R</span>
+            <span>R-exams</span>
+            <span>RMarkdown</span>
+            <span>LaTeX</span>
+          </div>
+          <a href="https://github.com/alvaretto/r-exams_matematicas" class="project-link" target="_blank">
+            Ver en GitHub
+            <svg viewBox="0 0 24 24"><path d="M7 17l9.2-9.2M17 17V7.8H7.8"/></svg>
+          </a>
+        </div>
+        <div class="project-preview"></div>
+        <div class="project-number">01</div>
+      </div>
+
+      <div class="project-item reveal" style="transition-delay: 0.1s;">
+        <div class="project-info">
+          <h3>WhisperLab</h3>
+          <p>Herramienta automatizada para transcribir videos y traducir subtítulos de inglés a español, optimizada para contenido de IA y programación. Usa OpenAI Whisper + Claude API.</p>
+          <div class="project-tech">
+            <span>Python</span>
+            <span>Whisper</span>
+            <span>Claude API</span>
+            <span>Google Colab</span>
+          </div>
+          <a href="https://github.com/alvaretto/WhisperLab" class="project-link" target="_blank">
+            Ver en GitHub
+            <svg viewBox="0 0 24 24"><path d="M7 17l9.2-9.2M17 17V7.8H7.8"/></svg>
+          </a>
+        </div>
+        <div class="project-preview"></div>
+        <div class="project-number">02</div>
+      </div>
+
+      <div class="project-item reveal" style="transition-delay: 0.1s;">
+        <div class="project-info">
+          <h3>Animaciones Matemáticas</h3>
+          <p>Visualizaciones y animaciones de conceptos matemáticos usando Manim (Python), creando material didáctico visual para la enseñanza de porcentajes, funciones y geometría.</p>
+          <div class="project-tech">
+            <span>Python</span>
+            <span>Manim</span>
+            <span>FFmpeg</span>
+            <span>LaTeX</span>
+          </div>
+          <a href="https://github.com/alvaretto/manim_animaciones_matematicas" class="project-link" target="_blank">
+            Ver en GitHub
+            <svg viewBox="0 0 24 24"><path d="M7 17l9.2-9.2M17 17V7.8H7.8"/></svg>
+          </a>
+        </div>
+        <div class="project-preview"></div>
+        <div class="project-number">03</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contacto -->
+  <section class="contact" id="contact">
+    <div class="contact-inner">
+      <div class="contact-info reveal">
+        <div class="section-header">
+          <div class="section-label">04 — Contacto</div>
+          <h2 class="section-title">¿Tienes un <em>proyecto</em><br>en mente?</h2>
+        </div>
+        <p class="contact-text">
+          Siempre estoy abierto a colaboraciones en tecnología educativa,
+          proyectos de evaluación automatizada o simplemente una buena
+          conversación sobre matemáticas y programación.
+        </p>
+        <div class="contact-channels">
+          <a href="https://github.com/alvaretto" class="contact-channel" target="_blank">
+            <div class="contact-channel-icon">⬡</div>
+            <div>
+              <span class="contact-channel-label">GitHub</span>
+              <span class="contact-channel-value">github.com/alvaretto</span>
+            </div>
+          </a>
+          <a href="https://www.linkedin.com/in/alvaro-angel-molina/" class="contact-channel" target="_blank">
+            <div class="contact-channel-icon">▦</div>
+            <div>
+              <span class="contact-channel-label">LinkedIn</span>
+              <span class="contact-channel-value">linkedin.com/in/alvaro-angel-molina</span>
+            </div>
+          </a>
+          <a href="https://rpubs.com/alvaretto" class="contact-channel" target="_blank">
+            <div class="contact-channel-icon">📄</div>
+            <div>
+              <span class="contact-channel-label">RPubs</span>
+              <span class="contact-channel-value">rpubs.com/alvaretto</span>
+            </div>
+          </a>
+        </div>
+      </div>
+      <form class="contact-form reveal" style="transition-delay: 0.2s;" onsubmit="event.preventDefault();">
+        <div class="form-group">
+          <label>Nombre</label>
+          <input type="text" placeholder="Tu nombre" required>
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" placeholder="tu@email.com" required>
+        </div>
+        <div class="form-group">
+          <label>Mensaje</label>
+          <textarea placeholder="Cuéntame sobre tu proyecto..." required></textarea>
+        </div>
+        <button type="submit" class="btn-primary form-submit">
+          Enviar mensaje
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <span class="footer-copy">© 2026 Álvaro Ángel Molina. Armenia, Quindío, Colombia.</span>
+    <div class="footer-links">
+      <a href="https://github.com/alvaretto" target="_blank">GitHub</a>
+      <a href="https://www.linkedin.com/in/alvaro-angel-molina/" target="_blank">LinkedIn</a>
+      <a href="https://rpubs.com/alvaretto" target="_blank">RPubs</a>
+    </div>
+  </footer>
+
+  <script>
+    /* ═══ Cursor personalizado ═══ */
+    const dot = document.getElementById('cursorDot');
+    const ring = document.getElementById('cursorRing');
+    let mouseX = 0, mouseY = 0;
+    let ringX = 0, ringY = 0;
+
+    document.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      dot.style.left = mouseX + 'px';
+      dot.style.top = mouseY + 'px';
+    });
+
+    function animateRing() {
+      ringX += (mouseX - ringX) * 0.15;
+      ringY += (mouseY - ringY) * 0.15;
+      ring.style.left = ringX + 'px';
+      ring.style.top = ringY + 'px';
+      requestAnimationFrame(animateRing);
+    }
+    animateRing();
+
+    document.querySelectorAll('a, button, .skill-card, .project-item').forEach(el => {
+      el.addEventListener('mouseenter', () => ring.classList.add('hover'));
+      el.addEventListener('mouseleave', () => ring.classList.remove('hover'));
+    });
+
+    /* ═══ Navegacion: hide on scroll ═══ */
+    let lastScroll = 0;
+    const navbar = document.getElementById('navbar');
+
+    window.addEventListener('scroll', () => {
+      const current = window.scrollY;
+      if (current > lastScroll && current > 100) {
+        navbar.classList.add('hidden');
+      } else {
+        navbar.classList.remove('hidden');
+      }
+      lastScroll = current;
+    });
+
+    /* ═══ Menu movil ═══ */
+    const navToggle = document.getElementById('navToggle');
+    const navLinks = document.getElementById('navLinks');
+
+    navToggle.addEventListener('click', () => {
+      navLinks.classList.toggle('open');
+    });
+
+    navLinks.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => navLinks.classList.remove('open'));
+    });
+
+    /* ═══ Scroll reveal ═══ */
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
