@@ -586,18 +586,18 @@
       z-index: 1;
     }
 
-    .about-image::after {
-      content: 'TU FOTO';
-      position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: var(--font-body);
-      font-size: 0.8rem;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: var(--text-muted);
+    .about-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 20%;
+      display: block;
+      filter: grayscale(100%) contrast(1.05);
+      transition: filter 0.6s ease;
+    }
+
+    .about-image:hover img {
+      filter: grayscale(0%) contrast(1);
     }
 
     .about-image-frame {
@@ -872,17 +872,36 @@
       overflow: hidden;
     }
 
-    .project-preview::before {
-      content: 'PREVIEW';
+    .project-preview img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .project-item:hover .project-preview img {
+      transform: scale(1.04);
+    }
+
+    .project-code {
       position: absolute;
       inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.75rem;
-      letter-spacing: 0.3em;
-      color: var(--text-muted);
+      padding: 1.4rem 1.6rem;
+      overflow: hidden;
+      font-family: 'DM Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+      font-size: 0.68rem;
+      line-height: 1.75;
+      color: var(--text-secondary);
+      background: var(--bg-deep);
+      white-space: pre;
+      tab-size: 2;
     }
+
+    .project-code .c { color: var(--text-muted); font-style: italic; }
+    .project-code .k { color: var(--accent); }
+    .project-code .s { color: var(--accent-light); }
+    .project-code .f { color: var(--text-primary); }
 
     .project-preview::after {
       content: '';
@@ -1269,6 +1288,7 @@
     <div class="about-grid">
       <div class="reveal" style="transition-delay: 0.1s;">
         <div class="about-image">
+          <img src="img/foto.jpg" alt="Retrato de Álvaro Ángel Molina" width="600" height="600" loading="lazy" decoding="async">
           <div class="about-image-frame"></div>
         </div>
       </div>
@@ -1408,7 +1428,9 @@
             <svg viewBox="0 0 24 24"><path d="M7 17l9.2-9.2M17 17V7.8H7.8"/></svg>
           </a>
         </div>
-        <div class="project-preview"></div>
+        <div class="project-preview">
+          <img src="img/rexams.png" alt="Gráfica de líneas con la evolución poblacional de cinco países entre 1960 y 2013, generada automáticamente para un ejercicio tipo SABER ICFES" width="1000" height="596" loading="lazy" decoding="async">
+        </div>
         <div class="project-number">01</div>
       </div>
 
@@ -1427,7 +1449,21 @@
             <svg viewBox="0 0 24 24"><path d="M7 17l9.2-9.2M17 17V7.8H7.8"/></svg>
           </a>
         </div>
-        <div class="project-preview"></div>
+        <div class="project-preview">
+          <div class="project-code" aria-label="Fragmento de código de WhisperLab que carga el modelo Whisper"><span class="c"># Carga del modelo de transcripción</span>
+<span class="k">import</span> whisper
+
+<span class="k">def</span> <span class="f">cargar_modelo_whisper</span>():
+    <span class="k">try</span>:
+        model = whisper.<span class="f">load_model</span>(<span class="s">"base"</span>)
+        <span class="f">print</span>(<span class="s">"Modelo cargado exitosamente."</span>)
+        <span class="k">return</span> model
+    <span class="k">except</span> Exception <span class="k">as</span> e:
+        <span class="f">print</span>(<span class="s">f"Error al cargar: {e}"</span>)
+        <span class="k">return</span> <span class="k">None</span>
+
+MAX_SUBTITLE_LENGTH = <span class="s">48</span></div>
+        </div>
         <div class="project-number">02</div>
       </div>
 
@@ -1446,7 +1482,9 @@
             <svg viewBox="0 0 24 24"><path d="M7 17l9.2-9.2M17 17V7.8H7.8"/></svg>
           </a>
         </div>
-        <div class="project-preview"></div>
+        <div class="project-preview">
+          <img src="img/manim.png" alt="Fotograma de una animación de Manim resolviendo paso a paso una integral definida por sustitución" width="1000" height="619" loading="lazy" decoding="async">
+        </div>
         <div class="project-number">03</div>
       </div>
     </div>
