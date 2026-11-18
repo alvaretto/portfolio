@@ -85,6 +85,16 @@ normal, reintentar unos segundos después.
 | `img/manim.png` | Fotograma de animación Manim |
 | `docs/` | Guía de uso, técnica y accesos |
 
+### Configuración local de Claude Code (no versionada)
+
+- `CLAUDE.local.md`: pide usar la skill `modern-web-guidance` antes de escribir
+  HTML, CSS o JS de cliente. Sin esa línea la skill no se activa sola.
+- `.claude/settings.local.json`: activa el plugin solo en este proyecto.
+- Una tarea web que termine sin la sección `### Modern Web Guidance` no
+  consultó la skill.
+- Si una guía de MWG choca con Impeccable en un valor visual, gana Impeccable.
+- Detalle: [Técnica → Asistencia de IA local](docs/TECNICA.md#asistencia-de-ia-local).
+
 ### Puntos de referencia en `index.html`
 
 Localizarlos siempre con `grep -n`, no por número de línea (cambian):

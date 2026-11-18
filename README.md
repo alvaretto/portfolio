@@ -53,12 +53,16 @@ portfolio/
 └── README.md               # Este archivo
 ```
 
+Fuera del repositorio (configuración local de Claude Code, no se versiona ni
+se despliega): `CLAUDE.local.md` y `.claude/settings.local.json`. Ver
+[Técnica → Asistencia de IA local](docs/TECNICA.md#asistencia-de-ia-local).
+
 ## Documentación
 
 | Documento | Para qué sirve | Léelo si… |
 |---|---|---|
 | **[Guía de uso](docs/GUIA-DE-USO.md)** | Instrucciones operativas: cambiar textos, imágenes, proyectos y cifras | Quieres modificar el contenido |
-| **[Documentación técnica](docs/TECNICA.md)** | Arquitectura, decisiones de diseño, costos, límites del plan gratuito | Quieres entender por qué está construido así |
+| **[Documentación técnica](docs/TECNICA.md)** | Arquitectura, decisiones de diseño, costos, límites del plan gratuito, asistencia de IA local | Quieres entender por qué está construido así |
 | **[Accesos](docs/ACCESOS.md)** | Inventario de cuentas y credenciales (sin secretos) | Necesitas recuperar o transferir el control |
 | **[CLAUDE.md](CLAUDE.md)** | Contexto persistente para Claude Code | Vas a trabajar en el repo con asistencia de IA |
 

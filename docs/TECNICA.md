@@ -111,6 +111,48 @@ No activarlo mientras el sitio siga siendo estático.
 **Sin auditar:** contraste de la paleta dorada sobre fondo oscuro, navegación
 por teclado, comportamiento con lector de pantalla.
 
+## Asistencia de IA local
+
+Nada de esto se despliega ni está en el repositorio: es configuración de Claude
+Code en la máquina del autor, documentada aquí para que se sepa que existe.
+
+Desde el 2026-11-17 el proyecto usa **Modern Web Guidance** (MWG), un plugin de
+Google Chrome que le da a Claude Code guías actuales de la plataforma web, con
+datos de compatibilidad Baseline: qué API nativa usar y qué alternativa dejar
+para los navegadores que todavía no la soportan.
+
+| Pieza | Dónde | Por qué |
+|---|---|---|
+| Plugin `modern-web-guidance@googlechrome` (v1.0.1) | `.claude/settings.local.json`, alcance local, ignorado por git | Solo este proyecto lo carga |
+| Línea «usa la skill `modern-web-guidance`» | `CLAUDE.local.md`, excluido en `.git/info/exclude` | La skill no se activa sola (ver abajo) |
+| Hook que apaga la telemetría | `~/.claude/hooks/mwg-sin-telemetria.py` | El CLI de MWG envía a Google las búsquedas por defecto |
+
+**Por qué hace falta `CLAUDE.local.md`.** Claude Code reserva un espacio fijo
+para la lista de skills que ve el modelo (unos 30 000 caracteres) y da
+prioridad a las más usadas. Una skill nueva llega solo con su nombre, y el
+modelo nunca lee su disparador. En la prueba, el mismo pedido sin esa línea no
+consultó MWG; con ella, sí.
+
+**Por qué la telemetría se apaga con un hook y no en `.zshrc`.** La variable que
+pide Google, `DISABLE_TELEMETRY=1`, también la lee Claude Code y le apaga
+funciones. El hook la pone solo en los comandos que ejecutan MWG.
+
+**Cómo saber si se usó.** La respuesta termina con una sección
+`### Modern Web Guidance` que cita las guías aplicadas. Una tarea web que
+termina sin ella no la consultó.
+
+**Convivencia con Impeccable.** Impeccable decide el diseño (layout, color,
+tipografía, movimiento); MWG decide qué API lo implementa y con qué
+alternativa. Si una guía de MWG fija un valor visual, gana Impeccable. La regla
+está en `~/.claude/rules/impeccable-frontend.md`.
+
+**Evidencia.** Pedido de prueba: un diálogo de contacto que se cierre al hacer
+clic fuera. Sin MWG salió JavaScript escrito a mano para detectar el clic; con
+MWG, `<dialog closedby="any">` más una alternativa para Safari, que aún no lo
+soporta.
+
+Detalle y vuelta atrás: `~/.claude/backups/mwg-instalacion-2026-11-17/LEEME.md`.
+
 ## Pendientes
 
 | Pendiente | Impacto | Nota |
@@ -135,3 +177,8 @@ necesidad.
 un repositorio conectado no prueba que el despliegue automático funcione. La
 comprobación válida fue hacer un `push` real y confirmar que el contenido
 cambiaba en producción.
+
+**Instalar un plugin no es usarlo.** Que Claude Code cargue una skill no
+garantiza que el modelo lea su descripción: con muchas skills instaladas, las
+nuevas llegan solo con el nombre. Se descubrió leyendo lo que el modelo recibe,
+no lo que reporta el instalador. Ver [Asistencia de IA local](#asistencia-de-ia-local).
